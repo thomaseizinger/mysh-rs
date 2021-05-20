@@ -101,6 +101,12 @@ impl Tokenizer for str {
                 _ => {
                     let remaining_str = &self[i..];
                     if let Some(s) = try_extract_symbol_at_start(remaining_str) {
+                        let to_advance = s.len() - 1;
+
+                        for _ in 0..to_advance {
+                            let _ = it.next();
+                        }
+
                         Some(Token::Symbol(s))
                     } else {
                         if !capture_state {
